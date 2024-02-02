@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
+import { TTask } from "../types";
+import { Task } from "./Task";
+import { fakeTodos } from "../fake-todos";
 
 export function List()
 {
-    const [todos, getTodos] = useState([]);
+    const [todos, getTodos] = useState<TTask[]>([]);
     const API = 'http://0.0.0.0:8000';
 
     const fetchPost = () =>
@@ -11,8 +14,10 @@ export function List()
             .then((res) => res.json())
             .then((res) =>
             {
-                console.log(res)
-                getTodos(res)
+                getTodos(res);
+            })
+            .catch(()=>{
+                getTodos(fakeTodos);
             })
     }
 
@@ -21,5 +26,7 @@ export function List()
         fetchPost()
     }, [])
 
-    return <ul></ul>
+    return <ul>
+        {todos.map(todo => Task(todo))}
+    </ul>
 }
