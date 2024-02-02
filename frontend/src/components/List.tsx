@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import { TTask } from "../types";
 import { Task } from "./Task";
 import { fakeTodos } from "../fake-todos";
+import { API } from "../constants";
 
 export function List()
 {
     const [todos, getTodos] = useState<TTask[]>([]);
-    const API = 'http://0.0.0.0:8000';
 
-    const fetchPost = () =>
+    const fetchTodos = () =>
     {
         fetch(API)
             .then((res) => res.json())
@@ -23,10 +23,10 @@ export function List()
 
     useEffect(() =>
     {
-        fetchPost()
+        fetchTodos()
     }, [])
 
     return <ul className="list-group">
-        {todos.map(todo => Task(todo))}
+        {todos.map(todo => Task({todo, fetchTodos}))}
     </ul>
 }
