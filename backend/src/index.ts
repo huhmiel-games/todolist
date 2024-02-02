@@ -37,7 +37,7 @@ app.get("/", (req: Request, res: Response) =>
 {
     try
     {
-        const data = db.prepare('SELECT * FROM tasks ORDER BY id DESC, done ASC').all();
+        const data = db.prepare('SELECT * FROM tasks ORDER BY done ASC, id DESC').all();
 
         res.json(data ?? []);
     }
