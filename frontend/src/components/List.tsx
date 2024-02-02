@@ -26,7 +26,7 @@ export function List()
         fetchPost()
     }, [])
 
-    return <ul>
+    return <ul className="list-group">
         {todos.map(todo => Task(todo))}
     </ul>
 }
