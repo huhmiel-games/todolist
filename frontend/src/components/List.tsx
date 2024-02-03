@@ -1,32 +1,23 @@
-import { useEffect, useState } from "react";
-import { TTask } from "../types";
-import { Task } from "./Task";
-import { fakeTodos } from "../fake-todos";
-import { API } from "../constants";
+import { TodoPartial } from "./TodoPartial";
+import { useLoaderData } from "react-router-dom";
+import { isTodoList } from "../typeguards";
 
 export function List()
 {
-    const [todos, getTodos] = useState<TTask[]>([]);
+    const todos = useLoaderData();
 
-    const fetchTodos = () =>
+    if(todos && isTodoList(todos))
     {
-        fetch(API)
-            .then((res) => res.json())
-            .then((res) =>
-            {
-                getTodos(res);
-            })
-            .catch(()=>{
-                getTodos(fakeTodos);
-            })
+        return (
+            <div className="m-2">
+                <ul className="list-group">
+                    {todos.map(todo => TodoPartial({ todo }))}
+                </ul>
+            </div>
+        )
     }
-
-    useEffect(() =>
+    else
     {
-        fetchTodos()
-    }, [])
-
-    return <ul className="list-group">
-        {todos.map(todo => Task({todo, fetchTodos}))}
-    </ul>
+        return <></>
+    }
 }
