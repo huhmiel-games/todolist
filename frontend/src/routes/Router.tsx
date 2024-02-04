@@ -3,6 +3,7 @@ import { List } from "../components/List";
 import ErrorPage from "../components/ErrorPage";
 import { TodoComplete } from "../components/TodoComplete";
 import { getAllTodos, getTodoById } from "../data/fetchApi";
+import { AddTodo } from "../components/AddTodo";
 
 export const Router = createBrowserRouter([
     {
@@ -15,6 +16,11 @@ export const Router = createBrowserRouter([
       path: "/:id",
       element: <TodoComplete />,
       loader: getTodoById,
+      errorElement: <ErrorPage />
+    },
+    {
+      path: "/add-todo",
+      element: <AddTodo />,
       errorElement: <ErrorPage />
     },
     {

@@ -3,7 +3,7 @@ import { API } from "../constants/constants";
 
 export async function getAllTodos()
 {
-    const todos = await fetch(API);
+    const todos = await fetch(`${API}`)
 
     if (todos.status === 200)
     {
@@ -45,5 +45,23 @@ export async function toggleTodoState(id: number)
         .catch(() =>
         {
             return 500;
+        })
+}
+
+export async function addTodo(title: string, description: string | undefined)
+{
+    const data = { title, description };
+
+    return fetch(API, {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        method: "POST",
+        body: JSON.stringify(data)
+    })
+        .then((res) =>
+        {
+            return res.status;
         })
 }
