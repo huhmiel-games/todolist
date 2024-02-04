@@ -1,12 +1,12 @@
 import { useLoaderData, useNavigate } from "react-router-dom";
-import { isTodo } from "../typeguards";
 import { toggleTodoState } from "../data/fetchApi";
+import { TTask } from "../types";
 
 export function TodoComplete()
 {
     const navigate = useNavigate();
 
-    const todo = useLoaderData();
+    const todo = useLoaderData() as TTask;
 
     const toggleState = async (id: number) =>
     {
@@ -22,24 +22,17 @@ export function TodoComplete()
         }
     }
 
-    if (todo && isTodo(todo))
-    {
-        const { id, title, done, description } = todo;
+    const { id, title, done, description } = todo;
 
-        return (
-            <div className="border rounded p-2 m-2">
-                <div className="d-flex justify-content-between align-items-center">
-                    <h2 className={done === 1 ? "text-decoration-line-through" : ''}>{title}</h2>
-                    <div className="form-check">
-                        <input onClick={() => toggleState(id)} className="form-check-input" type="checkbox" value="" checked={!!done} />
-                    </div>
+    return (
+        <div className="border rounded p-2 m-2">
+            <div className="d-flex justify-content-between align-items-center">
+                <h2 className={done === 1 ? "text-decoration-line-through" : ''}>{title}</h2>
+                <div className="form-check">
+                    <input onChange={() => toggleState(id)} className="form-check-input" type="checkbox" value="" checked={!!done} />
                 </div>
-                <p>{description}</p>
             </div>
-        )
-    }
-    else
-    {
-        return <></>
-    }
+            <p>{description}</p>
+        </div>
+    )
 }

@@ -32,7 +32,7 @@ export function TodoPartial(props: { todo: TTask })
         </Link>
 
         <div className="form-check">
-            <input onClick={() => toggleState(id)} className="form-check-input" type="checkbox" value="" checked={!!done} />
+            <input onChange={() => toggleState(id)} className="form-check-input" type="checkbox" value="" checked={!!done} />
         </div>
     </li>
 }
