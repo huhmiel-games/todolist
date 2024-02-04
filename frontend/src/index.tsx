@@ -10,7 +10,7 @@ async function prepare()
 
     const { worker } = await import("./mocks/browser");
 
-    return worker.start();
+    return worker.start({ onUnhandledRequest: 'bypass' });
 }
 
 prepare().then(async () =>
