@@ -3,43 +3,56 @@ import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
 import { RouterProvider } from "react-router-dom";
 import { Header } from './components/Header';
+import { Router } from './routes/Router';
 
-async function prepare()
-{
-    if (process.env.REACT_APP_MODE == 'dev')
-    {
-        const { worker } = await import("./mocks/browser");
+const root = ReactDOM.createRoot(
+    document.getElementById('root') as HTMLElement
+);
 
-        return worker.start({ onUnhandledRequest: 'bypass' });
-    }
-    else if (process.env.REACT_APP_MODE == 'github-pages')
-    {
-        const { worker } = await import("./mocks/browser");
+root.render(
+    <React.StrictMode>
+        <Header />
+        <RouterProvider router={Router} />
+    </React.StrictMode>
+);
 
-        return worker.start({
-            onUnhandledRequest: 'bypass',
-            serviceWorker: {
-                url: '/todolist/mockServiceWorker.js'
-            }
-        })
-    }
-}
+// commented code keeped for future tests
+// async function prepare()
+// {
+//     if (process.env.REACT_APP_MODE == 'dev')
+//     {
+//         const { worker } = await import("./mocks/browser");
 
-prepare().then(async () =>
-{
-    const { Router } = await import("./routes/Router");
+//         return worker.start({ onUnhandledRequest: 'bypass' });
+//     }
+//     else if (process.env.REACT_APP_MODE == 'github-pages')
+//     {
+//         const { worker } = await import("./mocks/browser");
 
-    const root = ReactDOM.createRoot(
-        document.getElementById('root') as HTMLElement
-    );
+//         return worker.start({
+//             onUnhandledRequest: 'bypass',
+//             serviceWorker: {
+//                 url: '/todolist/mockServiceWorker.js'
+//             }
+//         })
+//     }
+// }
 
-    root.render(
-        <React.StrictMode>
-            <Header />
-            <RouterProvider router={Router} />
-        </React.StrictMode>
-    );
-})
+// prepare().then(async () =>
+// {
+//     const { Router } = await import("./routes/Router");
+
+//     const root = ReactDOM.createRoot(
+//         document.getElementById('root') as HTMLElement
+//     );
+
+//     root.render(
+//         <React.StrictMode>
+//             <Header />
+//             <RouterProvider router={Router} />
+//         </React.StrictMode>
+//     );
+// })
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

@@ -1,6 +1,7 @@
 import { FormEvent } from "react";
-import { addTodo } from "../data/fetchApi";
+import { addTodo } from "../data/mockedApi";
 import { useNavigate } from "react-router-dom";
+import { API } from "../constants/constants";
 
 export function AddTodo()
 {
@@ -22,7 +23,7 @@ export function AddTodo()
 
         if (statusCode === 201)
         {
-            navigate('/');
+            navigate('/todolist');
         }
     }
 

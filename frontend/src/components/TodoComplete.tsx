@@ -1,6 +1,7 @@
 import { useLoaderData, useNavigate } from "react-router-dom";
-import { toggleTodoState } from "../data/fetchApi";
+import { toggleTodoState } from "../data/mockedApi";
 import { TTask } from "../types";
+import { API } from "../constants/constants";
 
 export function TodoComplete()
 {
@@ -14,11 +15,11 @@ export function TodoComplete()
 
         if (statusCode === 204)
         {
-            navigate("/");
+            navigate('/todolist');
         }
         else
         {
-            navigate("/error");
+            navigate('/todolist/error');
         }
     }
 
