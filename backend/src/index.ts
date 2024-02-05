@@ -6,7 +6,7 @@ import { isTask } from "./typeguards";
 
 dotenv.config();
 
-const app: Express = express();
+export const app: Express = express();
 const port = process.env.PORT || 8000;
 
 const dbPath = path.join(__dirname, process.env.DB_PATH || './database/todo.db')
