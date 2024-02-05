@@ -6,11 +6,23 @@ import { Header } from './components/Header';
 
 async function prepare()
 {
-    if (process.env.REACT_APP_MODE !== 'dev') return;
+    if (process.env.REACT_APP_MODE == 'dev')
+    {
+        const { worker } = await import("./mocks/browser");
 
-    const { worker } = await import("./mocks/browser");
+        return worker.start({ onUnhandledRequest: 'bypass' });
+    }
+    else if (process.env.REACT_APP_MODE == 'github-pages')
+    {
+        const { worker } = await import("./mocks/browser");
 
-    return worker.start({ onUnhandledRequest: 'bypass' });
+        return worker.start({
+            onUnhandledRequest: 'bypass',
+            serviceWorker: {
+                url: '/todolist/mockServiceWorker.js'
+            }
+        })
+    }
 }
 
 prepare().then(async () =>
