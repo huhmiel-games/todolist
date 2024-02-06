@@ -1,0 +1,9 @@
+<div *ngIf="todo" class="border rounded p-2 m-2">
+    <div class="d-flex justify-content-between align-items-center">
+        <h2 [ngClass]='todo && todo.done === 1 ? "text-decoration-line-through" : ""'>{{todo.title}}</h2>
+        <div class="form-check">
+            <input class="toggle" type="checkbox" (click)="toggleTodoComplete(todo.id)" [checked]="todo.done">
+        </div>
+    </div>
+    <p>{{todo.description}}</p>
+</div>

@@ -1,0 +1,17 @@
+<h2 class="m-2">Add a todo</h2>
+
+<form role="form" class="m-2" *ngIf="todoForm" [formGroup]="todoForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+        <label htmlFor="title-input" class="form-label">Title</label>
+        <input role="input" type="text" class="form-control" formControlName="title" id="title-input"
+            placeholder="my todo title" required />
+    </div>
+    <div class="mb-3">
+        <label htmlFor="description-input" class="form-label">add a description if you want</label>
+        <textarea role="textarea" class="form-control" id="description-input" formControlName="description"
+            rows={3}></textarea>
+    </div>
+    <div class="col-12">
+        <button role="submit" class="btn btn-primary" type="submit">Submit todo</button>
+    </div>
+</form>
