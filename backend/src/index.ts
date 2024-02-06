@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import Database from 'better-sqlite3';
 import path from "path";
 import { isTask } from "./typeguards";
+import { body, validationResult } from 'express-validator';
 
 dotenv.config();
 
@@ -69,9 +70,22 @@ app.get("/:id", (req: Request, res: Response) =>
     }
 });
 
+// new todo validation
+const titleValidation = () => body('title').trim().notEmpty().isString().escape();
+const descValidation = () => body('description').trim().isString().escape();
+
 // add a new todo
-app.post("/", (req: Request, res: Response) =>
+app.post("/", titleValidation(), descValidation(), (req: Request, res: Response) =>
 {
+    const result = validationResult(req);
+
+    if (!result.isEmpty())
+    {
+        res.status(400).json({ error: 'title must be a string' });
+
+        return;
+    }
+
     try
     {
         const data = db.prepare('INSERT INTO tasks ("title", "description", "done") VALUES (?, ?, ?)')
@@ -90,6 +104,7 @@ app.post("/", (req: Request, res: Response) =>
             res.status(500).json();
         }
     }
+
 });
 
 // toggle a todo state
