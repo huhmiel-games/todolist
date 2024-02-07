@@ -25,16 +25,21 @@ export class TodoComponent
     this.activatedRoute.params.subscribe(params =>
     {
       const id = params['id'];
-      
-        this.todoSubscription = this.todoDataService.getTodoById(id)?.subscribe(todo =>
+
+      this.todoSubscription = this.todoDataService.getTodoById(id)?.subscribe(
         {
-          if (this.isTodo(todo))
+          next: (todo) =>
           {
-            this.todo = todo;
+            if (this.isTodo(todo))
+            {
+              this.todo = todo;
+            }
+          },
+          error: (error) =>
+          {
+            this.router.navigate(['error']);
           }
-        }, error => {
-          this.router.navigate(['error']);
-        });
+        })
     });
   }
 

@@ -20,15 +20,28 @@ export class ListComponent implements OnInit
 
   ngOnInit(): void
   {
-    this.todosSubscription = this.todoDataService.getAllTodos().subscribe(todos =>
-    {
-      if (this.isTodoList(todos))
+    this.todosSubscription = this.todoDataService.getAllTodos().subscribe({
+      next: (todos) =>
       {
-        this.todos = todos
+        if (this.isTodoList(todos))
+        {
+          this.todos = todos
+        }
+      },
+      error: (err) => {
+        this.router.navigate(['error']);
       }
-    }, error => {
-      this.router.navigate(['error']);
-    });
+    })
+      // .subscribe(todos =>
+      // {
+      //   if (this.isTodoList(todos))
+      //   {
+      //     this.todos = todos
+      //   }
+      // }, error =>
+      // {
+      //   this.router.navigate(['error']);
+      // });
   }
 
   ngOnDestroy(): void
